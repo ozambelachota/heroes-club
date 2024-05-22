@@ -1,13 +1,16 @@
 'use client';
 import { createClient } from "@/lib/client";
+import { useSearchParams } from "next/navigation";
 
 export default function AuthPage() {
+  const params = useSearchParams();
+  const next = params.get("next") ?? "/";
   const handleLogin = (provider: "google" | "facebook") => {
     const supabase = createClient();
      supabase.auth.signInWithOAuth({
       provider,
       options: {
-        redirectTo: location.origin + "/home/auth/callback",
+        redirectTo: location.origin + "/home/auth/callback?next=" + next,
       },
     });
   };

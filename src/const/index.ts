@@ -1,0 +1,1 @@
+export const PROTECTED_URLS = ['/admin', '/usuario'];

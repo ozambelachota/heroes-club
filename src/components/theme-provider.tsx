@@ -1,8 +1,25 @@
 "use client";
 
-import { ThemeProvider as NextThemesProvider } from "next-themes";
-import { type ThemeProviderProps } from "next-themes/dist/types";
-
-export function ThemeProvider({ children, ...props }: ThemeProviderProps) {
-  return <NextThemesProvider {...props}>{children}</NextThemesProvider>;
+import { createTheme, CssBaseline, ThemeProvider } from "@mui/material";
+import { ReactNode } from "react";
+const theme = createTheme({
+  palette: {
+    mode: "dark",
+    primary: {
+      main: "#fff",
+    },
+    secondary: {
+      main: "#fff",
+    },
+  },
+});
+export function ThemeProviderRoot({ children }: { children: ReactNode }) {
+  return (
+    <>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        {children}
+      </ThemeProvider>
+    </>
+  );
 }

@@ -33,5 +33,5 @@ export async function GET(req: Request) {
       return NextResponse.redirect(`${origin}${next}`);
     }
   }
-  return NextResponse.redirect(`${origin}/auth/auth-code-error`);
+  return NextResponse.redirect(`${origin}/home/auth/auth-code-error`);
 }

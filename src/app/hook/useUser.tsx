@@ -2,7 +2,7 @@ import { createClient } from "@/lib/client";
 import { useQuery } from "@tanstack/react-query";
 const initUser = {
   created_at: '',
-  display_name: '',
+  name: '',
   email: '',
   id: '',
   image_url: '',
@@ -20,6 +20,7 @@ export default function useUser() {
           .select("*")
           .eq("id", data.session.user.id)
           .single();
+
         return user;
       }
       return initUser;

@@ -1,3 +1,4 @@
+import { PROTECTED_URLS } from "@/const";
 import { createServerClient, type CookieOptions } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
 
@@ -56,8 +57,18 @@ export async function updateSession(request: NextRequest) {
 
   const { data } = await supabase.auth.getSession();
 
-  const url = new URL(request.url); 
-  console.log(url.pathname)
+  const url = new URL(request.url);
 
-  return response;
+  if (data.session) {
+    if (url.pathname === "/home") {
+      return NextResponse.rewrite(new URL("/usuario", url));
+    }
+    return response;
+  } else {
+    if (PROTECTED_URLS.includes(url.pathname)) {
+      return NextResponse.rewrite(new URL("/home/auth", url));
+    }
+    return response;
+  }
+
 }
