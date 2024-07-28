@@ -3,7 +3,7 @@ import NavbarUser from "./components/navbar-user.component";
 
 export const LayoutUser = ({ children }: { children: React.ReactNode }) => {
   return (
-    <div className="w-full h-full">
+    <div className="w-full h-screen ">
       <nav>
         <NavbarUser />
       </nav>

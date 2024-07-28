@@ -1,5 +1,7 @@
 import {
   Button,
+  Container,
+  Modal,
   Table,
   TableBody,
   TableCell,
@@ -8,7 +10,10 @@ import {
   TableRow,
 } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
+import { useState } from "react";
 import { supabase } from "../../../../../server";
+import { Curso, useCursoStore } from "../store/curso.store";
+import FormEditCurso from "./form-edit-curso";
 
 function TableCurso() {
   const {
@@ -22,11 +27,23 @@ function TableCurso() {
         .from("cursos")
         .select(
           "*, categoria(categoria_area), docente(docente_nombre, docente_apellidos)"
-        );
+        )
+        .order("id", { ascending: true });  
+        ;
       if (error) throw error;
       return data;
     },
   });
+  const [open, setOpen] = useState(false);
+
+  const setCurso = useCursoStore((state) => state.setCursos);
+  const handleClose = () => {
+    setOpen(false);
+  };
+  const handleEditClick = (curso: Curso) => {
+    setCurso(curso);
+    setOpen(true);
+  };
   return (
     <div>
       <TableContainer>
@@ -74,7 +91,25 @@ function TableCurso() {
                   </TableCell>
                   <TableCell>{curso.curso_duracion}</TableCell>
                   <TableCell>
-                    <Button>Editar</Button>
+                    <Button
+                      onClick={() => {
+                        handleEditClick({
+                          docente_id: curso.docente_id ?? 0,
+                          fecha_inicio: curso.curso_fecha_inicio
+                            ? new Date(curso.curso_fecha_inicio)
+                            : new Date(),
+                          fecha_final: curso.curso_fecha_final
+                            ? new Date(curso.curso_fecha_final)
+                            : new Date(),
+                          nombre: curso.curso_nombre,
+                          id: curso.id,
+                          categoria_id: curso.categoria_id ?? 0,
+                          duracion: curso.curso_duracion ?? "",
+                        });
+                      }}
+                    >
+                      Editar
+                    </Button>
                   </TableCell>
                 </TableRow>
               ))
@@ -82,6 +117,11 @@ function TableCurso() {
           </TableBody>
         </Table>
       </TableContainer>
+      <Modal open={open} onClose={handleClose}>
+        <Container maxWidth="sm" className="flex justify-center items-center">
+          <FormEditCurso onClose={handleClose} />
+        </Container>
+      </Modal>
     </div>
   );
 }
