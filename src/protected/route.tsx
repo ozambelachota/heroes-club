@@ -1,11 +1,10 @@
 import { Navigate, Outlet } from "react-router-dom";
 import { useAuthStore } from "../store/auth";
 import { useEffect } from "react";
+
 interface ProtectedRouteProps {
   allowedRoles: string[];
 }
-
-
 
 export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
   allowedRoles,
