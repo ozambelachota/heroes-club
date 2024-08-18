@@ -1,5 +1,8 @@
 import {
+  Button,
+  CircularProgress,
   Container,
+  Paper,
   Table,
   TableBody,
   TableCell,
@@ -9,6 +12,7 @@ import {
 } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "../../../../server";
+import { Link } from "react-router-dom";
 
 export const TablaAlumno = () => {
   const {
@@ -27,7 +31,7 @@ export const TablaAlumno = () => {
   });
 
   if (isLoading) {
-    return <p>Cargando...</p>;
+    return <CircularProgress />;
   }
 
   if (error) {
@@ -40,7 +44,7 @@ export const TablaAlumno = () => {
 
   return (
     <Container>
-      <TableContainer>
+      <TableContainer component={Paper} color="secondary">
         <Table>
           <TableHead>
             <TableRow>
@@ -48,6 +52,7 @@ export const TablaAlumno = () => {
               <TableCell>Nombre</TableCell>
               <TableCell>Apellido</TableCell>
               <TableCell>DNI</TableCell>
+              <TableCell>Acciones</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -57,6 +62,16 @@ export const TablaAlumno = () => {
                 <TableCell>{alumno.estudiante_nombre}</TableCell>
                 <TableCell>{alumno.estudiante_apellidos}</TableCell>
                 <TableCell>{alumno.estudiante_dni}</TableCell>
+                <TableCell>
+                  <Button variant="contained" color="success">
+                    ver notas
+                  </Button>
+                  <Button variant="contained" color="primary">
+                    <Link to={`/admin/alumnos/notas/${alumno.id}`}>
+                    Ingresar notas
+                    </Link>
+                  </Button>
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>

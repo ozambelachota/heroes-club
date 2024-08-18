@@ -4,21 +4,24 @@ import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { About } from "./page/about/about";
 import Admin from "./page/admin/admin";
 import { LayoutAdmin } from "./page/admin/components/layout";
+import FormNotasAlumno from "./page/admin/view/admin-alumno/components/form-notas-alumno";
 import AdminCursos from "./page/admin/view/admin-cursos/admin-curso";
-import Docente from "./page/admin/view/docente/docente";
+import Docente from "./page/admin/view/admin-docente/docente";
 import { Cursos } from "./page/curso/curso";
+import DocenteUser from "./page/docente/docente";
+import LayoutDocente from "./page/docente/layout";
 import { LayoutPublic } from "./page/home/components/layout";
 import { Home } from "./page/home/home";
 import { Login } from "./page/login/login";
 import { Register } from "./page/register/register";
 import Reporte from "./page/report/report";
 import { Unauthorized } from "./page/unauthorization/route";
+import { LayoutUser } from "./page/usuario/layout";
 import { User } from "./page/usuario/user";
 import { ProtectedRoute } from "./protected/route";
 import Provider from "./provider";
 import { supabase } from "./server";
 import { useAuthStore } from "./store/auth";
-import { LayoutUser } from "./page/usuario/layout";
 
 const fetchUserRole = async (userId: string) => {
   const { data, error } = await supabase
@@ -63,7 +66,7 @@ const App: React.FC = () => {
         }
       }
     });
-  }, []);
+  }, [auth]);
 
   return (
     <Provider>
@@ -82,6 +85,12 @@ const App: React.FC = () => {
           >
             <Route path="*" element={<RouteUsuario />} />
           </Route>
+          <Route
+            path="/docente/*"
+            element={<ProtectedRoute allowedRoles={["docente"]} />}
+          >
+            <Route path="*" element={<RouterDcoente />} />
+          </Route>
           <Route path="/unauthorized" element={<Unauthorized />} />
         </Routes>
       </BrowserRouter>
@@ -95,6 +104,15 @@ const RouteUsuario = () => {
         <Route index element={<User />} />
       </Routes>
     </LayoutUser>
+  );
+};
+const RouterDcoente = () => {
+  return (
+    <LayoutDocente>
+      <Routes>
+        <Route index element={<DocenteUser />} />
+      </Routes>
+    </LayoutDocente>
   );
 };
 
@@ -121,6 +139,7 @@ export const RouterAdmin = () => {
         <Route path="curso" element={<AdminCursos />} />
         <Route path="report" element={<Reporte />} />
         <Route path="horario" element={<Navigate to={"/horario"} />} />
+        <Route path="alumnos/notas/:id" element={<FormNotasAlumno />} />
         <Route path="docente" element={<Docente />} />
       </Routes>
     </LayoutAdmin>

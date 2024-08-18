@@ -2,6 +2,7 @@ import {
   Button,
   Container,
   Modal,
+  Paper,
   Table,
   TableBody,
   TableCell,
@@ -28,8 +29,7 @@ function TableCurso() {
         .select(
           "*, categoria(categoria_area), docente(docente_nombre, docente_apellidos)"
         )
-        .order("id", { ascending: true });  
-        ;
+        .order("id", { ascending: true });
       if (error) throw error;
       return data;
     },
@@ -46,8 +46,8 @@ function TableCurso() {
   };
   return (
     <div>
-      <TableContainer>
-        <Table>
+      <TableContainer component={Paper}>
+        <Table className="bg-slate-500">
           <TableHead>
             <TableRow>
               <TableCell>#</TableCell>
@@ -89,9 +89,10 @@ function TableCurso() {
                       <span>No asignado</span>
                     )}
                   </TableCell>
-                  <TableCell>{curso.curso_duracion}</TableCell>
+                  <TableCell>{curso.curso_duracion + " MESES"} </TableCell>
                   <TableCell>
                     <Button
+                      variant="contained"
                       onClick={() => {
                         handleEditClick({
                           docente_id: curso.docente_id ?? 0,

@@ -7,7 +7,11 @@ import NavbarAdmin from "./navbar.admin";
 
 const theme = createTheme({
   palette: {
-    mode: "dark",
+    mode: "light",
+    background: {},
+  },
+  typography: {
+    fontFamily: "Roboto",
   },
   components: {},
 });
@@ -16,12 +20,11 @@ export const LayoutAdmin = ({ children }: { children: ReactNode }) => {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-
       <LocalizationProvider dateAdapter={AdapterDayjs}>
-        <div>
+        <div className="">
           <NavbarAdmin />
         </div>
-        <div>{children}</div>
+        <div className="h-full w-dvw">{children}</div>
       </LocalizationProvider>
     </ThemeProvider>
   );

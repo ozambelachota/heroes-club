@@ -157,6 +157,7 @@ export default function FormCreateCurso() {
                 <InputLabel id="categoria-label">Categoría</InputLabel>
                 <Select
                   labelId="categoria-label"
+                  label="Categoría"
                   {...field}
                   error={!!errors.categoria}
                 >
@@ -223,6 +224,7 @@ export default function FormCreateCurso() {
                 <InputLabel id="docente-label">Docente</InputLabel>
                 <Select
                   labelId="docente-label"
+                  label="Docente"
                   {...field}
                   error={!!errors.docente}
                 >

@@ -225,6 +225,48 @@ export type Database = {
           },
         ]
       }
+      notas: {
+        Row: {
+          created_at: string
+          id: number
+          notas_alumno_id: number | null
+          notas_curso_id: number | null
+          notas_descripcion: string | null
+          notas_nota: number | null
+        }
+        Insert: {
+          created_at?: string
+          id?: number
+          notas_alumno_id?: number | null
+          notas_curso_id?: number | null
+          notas_descripcion?: string | null
+          notas_nota?: number | null
+        }
+        Update: {
+          created_at?: string
+          id?: number
+          notas_alumno_id?: number | null
+          notas_curso_id?: number | null
+          notas_descripcion?: string | null
+          notas_nota?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "notas_notas_alumno_id_fkey"
+            columns: ["notas_alumno_id"]
+            isOneToOne: false
+            referencedRelation: "estudiante"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "notas_notas_curso_id_fkey"
+            columns: ["notas_curso_id"]
+            isOneToOne: false
+            referencedRelation: "cursos"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       profile: {
         Row: {
           created_at: string

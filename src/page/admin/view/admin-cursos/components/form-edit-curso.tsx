@@ -1,6 +1,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Button,
+  ButtonGroup,
   Container,
   FormControl,
   InputLabel,
@@ -132,7 +133,7 @@ export default function FormEditCurso({ onClose }: Props) {
   };
 
   return (
-    <div className="bg-slate-800 dark:bg-gray-900 rounded-lg p-4 m-2">
+    <div className="bg-slate-400  rounded-lg p-4 m-2">
       <Typography variant="h4" align="center">
         Actualizar curso
       </Typography>
@@ -163,6 +164,7 @@ export default function FormEditCurso({ onClose }: Props) {
                 <InputLabel id="categoria-label">Categoría</InputLabel>
                 <Select
                   labelId="categoria-label"
+                  label="Categoría"
                   {...field}
                   error={!!errors.categoria}
                 >
@@ -229,6 +231,7 @@ export default function FormEditCurso({ onClose }: Props) {
                 <InputLabel id="docente-label">Docente</InputLabel>
                 <Select
                   labelId="docente-label"
+                  label="Docente"
                   {...field}
                   error={!!errors.docente}
                 >
@@ -251,31 +254,32 @@ export default function FormEditCurso({ onClose }: Props) {
               </FormControl>
             )}
           />
-
-          <Button
-            variant="contained"
-            type="submit"
-            disabled={mutation.isPending}
-          >
-            {mutation.isPending ? "guardando..." : "Guardar"}
-          </Button>
-          {mutation.isError && (
-            <Typography color="error">
-              Error creando el curso: {mutation.error.message}
-            </Typography>
-          )}
+          <ButtonGroup>
+            <Button
+              variant="contained"
+              type="submit"
+              disabled={mutation.isPending}
+            >
+              {mutation.isPending ? "guardando..." : "Guardar"}
+            </Button>
+            {mutation.isError && (
+              <Typography color="error">
+                Error creando el curso: {mutation.error.message}
+              </Typography>
+            )}
+            <Button
+              className="flex justify-center items-center"
+              variant="outlined"
+              type="button"
+              color="warning"
+              onClick={onClose}
+            >
+              Cerrar
+            </Button>
+          </ButtonGroup>
         </form>
       </Container>
-      <Button
-        className="flex justify-center items-center"
-        variant="outlined"
-        type="button"
-        color="warning"
-        onClick={onClose}
-      >
-        Cerrar
-      </Button>
-      {mutation.isSuccess && toast.success("Curso guardado correctamente")}
+      {mutation.isSuccess ? toast.success("Curso guardado correctamente") : ""}
       <Toaster theme="system" position="top-center" duration={4000} />
     </div>
   );
